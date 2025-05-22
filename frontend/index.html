@@ -91,10 +91,14 @@
       resultDiv.textContent = "Classifying...";
 
       try {
-        const response = await fetch('http://localhost:5001/classify_file', {
-          method: 'POST',
-          body: formData
-        });
+        const API_BASE = location.hostname === "localhost"
+            ? "http://localhost:5001"
+            : "https://file-classifier.onrender.com";
+
+        const response = await fetch(`${API_BASE}/classify_file`, {
+            method: "POST",
+            body: formData
+            });
 
         const data = await response.json();
 
