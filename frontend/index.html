@@ -91,6 +91,7 @@
       resultDiv.textContent = "Classifying...";
 
       try {
+        // Use localhost during development, otherwise use deployed backend URL
         const API_BASE = location.hostname === "localhost"
             ? "http://localhost:5001"
             : "https://file-classifier.onrender.com";
