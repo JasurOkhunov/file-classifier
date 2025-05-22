@@ -1,0 +1,3 @@
+This is a simple bank statement from XYZ Bank.
+Account Summary: January
+Ending Balance: $4,201.12
