@@ -1,3 +1,23 @@
+# Core App Dependencies
 Flask==3.0.3
+
+# ML & Text Processing
+scikit-learn==1.6.1
+joblib==1.4.2
+
+# File Handling
+python-docx==1.1.0       # for .docx support
+openpyxl==3.1.2          # for .xlsx support
+pandas==2.2.2            # for .csv and .xlsx parsing
+
+# OCR
+pytesseract==0.3.10
+Pillow==10.3.0
+
+# PDF Parsing
+PyMuPDF==1.23.26
+pdfminer.six==20221105
+
+# Testing
 pytest==8.3.3
 pytest-mock==3.14.0
