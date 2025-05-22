@@ -1,0 +1,4 @@
+Invoice #: 76543
+Invoice Date: 2024-10-01
+Due Date: 2024-10-30
+Amount: $220.00

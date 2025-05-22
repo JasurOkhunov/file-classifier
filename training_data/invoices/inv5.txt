@@ -1,0 +1,4 @@
+INVOICE
+Invoice Number: 55667
+Amount Payable: $1,200.00
+Customer: Jane Doe

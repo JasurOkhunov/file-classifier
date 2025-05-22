@@ -1,0 +1,4 @@
+INVOICE
+Bill To: Beta LLC
+Invoice Date: 2024-08-15
+Amount Due: $430.00

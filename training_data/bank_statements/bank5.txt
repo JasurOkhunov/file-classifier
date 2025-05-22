@@ -1,0 +1,4 @@
+Bank: Global Bank
+Acct Summary
+Ending Balance: $5,320.00
+Available Balance: $5,000.00

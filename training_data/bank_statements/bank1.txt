@@ -1,0 +1,4 @@
+Bank of XYZ
+Account Summary
+Statement Period: Jan 1–Jan 31
+Ending Balance: $2,000.00

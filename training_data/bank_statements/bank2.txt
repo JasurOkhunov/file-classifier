@@ -1,0 +1,4 @@
+Account Number: 12345678
+Bank: First Finance
+Balance: $3,450.23
+Statement Date: Feb 28

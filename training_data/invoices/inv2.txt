@@ -1,0 +1,4 @@
+INVOICE
+Amount Due: $500.00
+Due Date: 2024-11-30
+Customer: XYZ Ltd

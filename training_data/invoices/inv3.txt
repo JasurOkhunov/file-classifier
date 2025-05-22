@@ -1,0 +1,4 @@
+Invoice Date: 2024-09-01
+Invoice #: 23456
+Total Amount: $150.00
+Billed To: John Smith

@@ -1,0 +1,4 @@
+XYZ Bank Statement
+Account Overview
+Period Ending: June 30
+Balance: $3,000.00
