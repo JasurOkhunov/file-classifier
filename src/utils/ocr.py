@@ -15,7 +15,7 @@ def extract_text_from_image(image_bytes: bytes) -> str:
 
     Notes:
         - The image is resized to a maximum dimension of 1000 pixels to improve OCR performance.
-        - OCR is performed with a timeout of 10 seconds.
+        - OCR is performed with a timeout of 30 seconds.
         - Logs extracted text (up to 100 characters) and errors.
     """
     try:
@@ -26,7 +26,7 @@ def extract_text_from_image(image_bytes: bytes) -> str:
         image.thumbnail((MAX_DIM, MAX_DIM), Image.Resampling.LANCZOS)
 
         # Run OCR with timeout
-        text = pytesseract.image_to_string(image, timeout=10)
+        text = pytesseract.image_to_string(image, timeout=30)
         logging.info(f"[OCR] Extracted text: {text[:100]}")
         return text
     except Exception as e:
