@@ -1,0 +1,17 @@
+# Don't include virtual environments
+venv/
+__pycache__/
+*.py[cod]
+*.log
+
+# Ignore IDE/workspace files
+.vscode/
+*.DS_Store
+
+# Ignore test cache and git
+.pytest_cache/
+.git/
+.gitignore
+
+# Exclude local training data
+training_data/
