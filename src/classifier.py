@@ -25,9 +25,9 @@ def classify_file(file: FileStorage) -> str:
 
     # STEP 1: Try filename-based classification (cheap)
     if "drivers_license" in filename or "driver_license" in filename:
-        return "drivers_license"
+        return "drivers license"
     if "bank_statement" in filename or "bank" in filename:
-        return "bank_statement"
+        return "bank statement"
     if "invoice" in filename:
         return "invoice"
 
@@ -56,15 +56,15 @@ def classify_file(file: FileStorage) -> str:
     # STEP 4: ML classification, else fallback
     ml_label = classify_with_model(text)
 
-    if ml_label in {"invoice", "bank_statement", "driver_license"}:
+    if ml_label in {"invoice", "bank statement", "driver license"}:
         return ml_label
     else:
         # Fallback keyword check
         if is_bank_statement(text):
-            return "bank_statement"
+            return "bank statement"
         elif is_invoice(text):
             return "invoice"
         elif is_driver_license(text):
-            return "driver_license"
+            return "driver license"
         else:
             return "unknown file"       
