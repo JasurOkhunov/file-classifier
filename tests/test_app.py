@@ -1,5 +1,4 @@
 from io import BytesIO
-
 import pytest
 from src.app import app, allowed_file
 
@@ -9,13 +8,17 @@ def client():
     with app.test_client() as client:
         yield client
 
-
 @pytest.mark.parametrize("filename, expected", [
     ("file.pdf", True),
     ("file.png", True),
     ("file.jpg", True),
-    ("file.txt", False),
+    ("file.docx", True),
+    ("file.xlsx", True),
+    ("file.csv", True),
+    ("file.txt", True),
+    ("file.exe", False),
     ("file", False),
+    ("file.doc", False),  # legacy Word, not supported
 ])
 def test_allowed_file(filename, expected):
     assert allowed_file(filename) == expected
