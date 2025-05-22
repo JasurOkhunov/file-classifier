@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
 from src.classifier import classify_file
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app) 
 
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpeg', 'jpg', 'docx', 'xlsx', 'csv', 'txt'}
 
