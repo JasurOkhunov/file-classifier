@@ -26,6 +26,9 @@ def classify_file_route():
     file_class = classify_file(file)
     return jsonify({"file_class": file_class}), 200
 
+@app.route("/", methods=["GET"])
+def root():
+    return "Service is up", 200
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
