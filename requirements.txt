@@ -1,7 +1,7 @@
 # Core App Dependencies
 Flask==3.0.3
 
-# ML & Text Processing
+# ML and Text Processing
 scikit-learn==1.6.1
 joblib==1.4.2
 
@@ -10,7 +10,7 @@ python-docx==1.1.0       # for .docx support
 openpyxl==3.1.2          # for .xlsx support
 pandas==2.2.2            # for .csv and .xlsx parsing
 
-# OCR
+# OCR (Optical Character Recognition)
 pytesseract==0.3.10
 Pillow==10.3.0
 
