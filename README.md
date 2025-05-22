@@ -85,12 +85,12 @@ This version of the file classifier improves the original baseline through sever
 1. **Build and run**
     ```bash
     docker build -t file-classifier .
-    docker run -p 5000:5000 file-classifier
+    docker run -p 5001:5001 file-classifier
     ```
 
 2. **Test the API**
     ```bash
-    curl -X POST -F 'file=@path/to/sample.pdf' http://localhost:5000/classify_file
+    curl -X POST -F 'file=@path/to/sample.pdf' http://localhost:5001/classify_file
     ```
 
 ---
