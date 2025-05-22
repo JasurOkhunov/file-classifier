@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>File Classifier</title>
+  <link rel="icon" href="favicon.ico" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f9fc;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    form {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    input[type="file"] {
+      margin-bottom: 1rem;
+      width: 100%;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      color: #222;
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Document Classifier</h1>
+  <p style="max-width: 500px; text-align: center; color: #555;">
+    Upload a document (PDF, image, Word, CSV, etc.) and our AI-powered system will identify whether it's an invoice, bank statement, or driver's license.
+  </p>
+  <form id="uploadForm">
+    <input type="file" id="fileInput" name="file" required />
+    <br/>
+    <button type="submit">Classify</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const file = document.getElementById('fileInput').files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      resultDiv.textContent = "Classifying...";
+
+      try {
+        const response = await fetch('http://localhost:5001/classify_file', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+
+        resultDiv.textContent = `Prediction: ${data.file_class}`;
+        resultDiv.className = "";
+      } catch (err) {
+        resultDiv.textContent = 'Error: ' + err.message;
+        resultDiv.className = "error";
+      }
+    });
+  </script>
+</body>
+</html>
