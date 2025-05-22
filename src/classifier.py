@@ -23,10 +23,10 @@ def classify_file(file: FileStorage) -> str:
     file_bytes = file.read()
     logging.info(f"File received: {filename}")
 
-    # STEP 1: Try filename-based classification (cheap)
-    if "drivers_license" in filename or "driver_license" in filename:
-        return "drivers license"
-    if "bank_statement" in filename or "bank" in filename:
+    # STEP 1: Try basic filename-based classification (cheap)
+    if "driver" in filename or "drivers_license" in filename or "driver_license" in filename:
+        return "driver license"
+    if "bank" in filename or "bank_statement" in filename:
         return "bank statement"
     if "invoice" in filename:
         return "invoice"
