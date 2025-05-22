@@ -1,76 +1,136 @@
 # Heron Coding Challenge - File Classifier
 
-## Overview
+## Enhancements Made by Jasur Okhunov
 
-At Heron, we’re using AI to automate document processing workflows in financial services and beyond. Each day, we handle over 100,000 documents that need to be quickly identified and categorised before we can kick off the automations.
+This version of the file classifier improves the original baseline through several real-world, production-ready capabilities including:
 
-This repository provides a basic endpoint for classifying files by their filenames. However, the current classifier has limitations when it comes to handling poorly named files, processing larger volumes, and adapting to new industries effectively.
+### Features & Improvements
 
-**Your task**: improve this classifier by adding features and optimisations to handle (1) poorly named files, (2) scaling to new industries, and (3) processing larger volumes of documents.
+#### File Type Support
+- **Extended formats:** `.pdf`, `.jpg`, `.jpeg`, `.png`, `.docx`, `.xlsx`, `.csv`, `.txt`
+- **OCR for images:** Uses Tesseract for extracting text from image-based documents
+- **Office document parsing:** Utilizes `python-docx`, `openpyxl`, and `pandas` for handling Word, Excel, and CSV files
 
-This is a real-world challenge that allows you to demonstrate your approach to building innovative and scalable AI solutions. We’re excited to see what you come up with! Feel free to take it in any direction you like, but we suggest:
+#### Machine Learning Classifier
+- **Model:** TF-IDF + Logistic Regression (`scikit-learn`)
+- **Trained classes:** `invoice`, `bank statement`, `driver license`
+- **Confidence threshold:** Prevents misclassifications
+- **Fallback heuristics:** Keyword-based logic for robustness
 
+#### Testing
+- **Comprehensive tests:** Edge cases and all supported file types (`tests/`)
+- **Test execution:** Via `pytest` locally or inside Docker
 
-### Part 1: Enhancing the Classifier
-
-- What are the limitations in the current classifier that's stopping it from scaling?
-- How might you extend the classifier with additional technologies, capabilities, or features?
-
-
-### Part 2: Productionising the Classifier 
-
-- How can you ensure the classifier is robust and reliable in a production environment?
-- How can you deploy the classifier to make it accessible to other services and users?
-
-We encourage you to be creative! Feel free to use any libraries, tools, services, models or frameworks of your choice
-
-### Possible Ideas / Suggestions
-- Train a classifier to categorize files based on the text content of a file
-- Generate synthetic data to train the classifier on documents from different industries
-- Detect file type and handle other file formats (e.g., Word, Excel)
-- Set up a CI/CD pipeline for automatic testing and deployment
-- Refactor the codebase to make it more maintainable and scalable
-
-## Marking Criteria
-- **Functionality**: Does the classifier work as expected?
-- **Scalability**: Can the classifier scale to new industries and higher volumes?
-- **Maintainability**: Is the codebase well-structured and easy to maintain?
-- **Creativity**: Are there any innovative or creative solutions to the problem?
-- **Testing**: Are there tests to validate the service's functionality?
-- **Deployment**: Is the classifier ready for deployment in a production environment?
-
-
-## Getting Started
-1. Clone the repository:
-    ```shell
-    git clone <repository_url>
-    cd heron_classifier
+#### Docker Support
+- **Fully Dockerized:** Includes all dependencies (Tesseract, pdfminer, etc.)
+- **Quick start:**
+    ```bash
+    docker build -t file-classifier .
+    docker run -p 5000:5000 file-classifier
     ```
 
-2. Install dependencies:
-    ```shell
+#### Debugging Setup
+- **VS Code support:** `launch.json` for step-by-step debugging
+- **Easy endpoint testing:** Use `curl` or the frontend UI
+
+#### Frontend UI
+- **Simple HTML frontend:** (`frontend/index.html`)
+- **File upload & prediction:** Supports all file types
+- **Smart API detection:** Switches between local and Render deployments
+    ```js
+    const API_BASE = location.hostname === "localhost"
+        ? "http://localhost:5000"
+        : "https://file-classifier.onrender.com";
+    ```
+
+---
+
+## Run Instructions
+
+### Local Setup
+
+1. **Clone and set up environment**
+    ```bash
+    git clone https://github.com/JasurOkhunov/file-classifier.git
+    cd file-classifier
     python -m venv venv
     source venv/bin/activate
     pip install -r requirements.txt
     ```
 
-3. Run the Flask app:
-    ```shell
+2. **Start backend**
+    ```bash
     python -m src.app
     ```
+    Or, in VS Code:  
+    Press <kbd>F5</kbd> to run the debugger using `launch.json`
 
-4. Test the classifier using a tool like curl:
-    ```shell
-    curl -X POST -F 'file=@path_to_pdf.pdf' http://127.0.0.1:5000/classify_file
-    ```
-
-5. Run tests:
-   ```shell
+3. **Run tests**
+    ```bash
     pytest
     ```
 
-## Submission
+4. **Run frontend**
+    ```bash
+    cd frontend
+    python -m http.server 8000
+    ```
+    Then open your browser to:  
+    [http://localhost:8000](http://localhost:8000)
 
-Please aim to spend 3 hours on this challenge.
+---
 
-Once completed, submit your solution by sharing a link to your forked repository. Please also provide a brief write-up of your ideas, approach, and any instructions needed to run your solution. 
+### Docker
+
+1. **Build and run**
+    ```bash
+    docker build -t file-classifier .
+    docker run -p 5000:5000 file-classifier
+    ```
+
+2. **Test the API**
+    ```bash
+    curl -X POST -F 'file=@path/to/sample.pdf' http://localhost:5000/classify_file
+    ```
+
+---
+
+## Training
+
+- **Training data:**  
+  ```
+  training_data/
+    ├── invoices/
+    ├── bank_statements/
+    └── driver_licenses/
+  ```
+- **To retrain the model:**
+    ```bash
+    python train_model.py
+    ```
+- **Model output:**  
+  `model/document_classifier.joblib`
+
+---
+
+## Deployment Notes (Render)
+
+- **Backend deployed at:**  
+  [https://file-classifier.onrender.com](https://file-classifier.onrender.com)
+- **OCR step:** Due to resource limitations on Render, OCR processing for image files (e.g., .jpg, .png) may take longer than usual. To prevent premature termination, the timeout has been extended to 30 seconds in the deployed version.
+> **Note:** This limitation applies only to the Render deployment. When running locally, OCR processing is fast and operates without delays.
+
+---
+
+## Live Demo (Frontend)
+
+- **Accessible at:**  
+  [https://ornate-gumdrop-5f0eca.netlify.app/](https://ornate-gumdrop-5f0eca.netlify.app/)
+
+## CI/CD Pipeline
+
+- **Continuous Integration (CI):**
+    - Automated tests (`pytest`) run via GitHub Actions on every push to `main`.
+- **Continuous Delivery (CD):**
+    - **Frontend (Netlify):** Automatically rebuilds and redeploys the frontend from the `frontend/` folder.
+    - **Backend (Render):** Redeploys the Dockerized backend on each push to `main`.
